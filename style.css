@@ -1,0 +1,240 @@
+html { scroll-behavior: smooth; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+body { background-color: #0b111a; color: white; min-height: 100vh; display: flex; flex-direction: column; }
+
+/* Черная полоса в самом верху */
+.top-nav {
+    background: #000;
+    height: 70px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    border-bottom: 3px solid #00d4ff;
+}
+
+.logo { font-size: 26px; font-weight: bold; color: #00d4ff; }
+.logo span { color: #ff8c00; }
+
+.top-nav ul { display: flex; list-style: none; }
+.top-nav ul li a { color: white; text-decoration: none; margin: 0 15px; transition: 0.3s; }
+.top-nav ul li a:hover { color: #ff8c00; }
+
+.btn-play { background: #ff8c00; color: #000 !important; padding: 8px 18px; border-radius: 4px; text-decoration: none; font-weight: bold; }
+
+header {
+    height: 60vh;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://i.postimg.cc/QtprJJbK/3ceed5dec6a11f09aabcae094644fc9-3.jpg') center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 70px;
+}
+
+.hero h1 { font-size: 4rem; }
+.hero h1 span { color: #ff8c00; }
+
+.server-ip { margin-top: 20px; padding: 15px; border: 2px dashed #00d4ff; cursor: pointer; background: rgba(0,212,255,0.1); border-radius: 10px; }
+
+/* Техническая секция */
+.tech-section { padding: 40px 20px; background: #0b111a; }
+.tech-card { border-left: 5px solid #ff8c00 !important; }
+.info-block { border-left: 5px solid #00d4ff !important; background: rgba(0, 212, 255, 0.05); }
+
+/* Магазин */
+.shop-section { padding: 60px 20px; text-align: center; }
+.section-title { font-size: 2.5rem; margin-bottom: 40px; color: #00d4ff; }
+.shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; }
+.shop-item { background: #162130; padding: 25px; border-radius: 10px; border-top: 4px solid #ff8c00; transition: 0.3s; }
+.shop-item:hover { transform: translateY(-5px); }
+.shop-item i { font-size: 2.5rem; color: #00d4ff; margin-bottom: 10px; }
+.price { font-size: 1.5rem; color: #ff8c00; font-weight: bold; margin-bottom: 15px; }
+.buy-btn { width: 100%; padding: 10px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; background: #fff; }
+.buy-btn:hover { background: #00d4ff; color: #fff; }
+
+/* Правила */
+.rules-section { padding: 60px 20px; background: #0f1722; }
+.rules-container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+.rules-category { background: #162130; padding: 20px; border-left: 5px solid #00d4ff; border-radius: 0 10px 10px 0; }
+.rules-category h3 { color: #ff8c00; margin-bottom: 10px; }
+.rules-category ul { list-style: none; }
+.rules-category li { margin-bottom: 8px; color: #ccc; }
+.rules-category span { color: #00d4ff; font-weight: bold; margin-right: 5px; }
+.special { border-left-color: #ff8c00; }
+.warning { color: #ff8c00 !important; }
+
+/* Форум */
+.forum-section { padding: 80px 20px; text-align: center; border-top: 2px solid #00d4ff; }
+.forum-btn { display: inline-block; padding: 15px 30px; border: 2px solid #ff8c00; color: #ff8c00; text-decoration: none; font-weight: bold; border-radius: 50px; transition: 0.3s; margin-top: 20px; }
+.forum-btn:hover { background: #ff8c00; color: #000; }
+
+footer { padding: 30px; text-align: center; color: #555; background: #000; margin-top: auto; }
+/* Общие стили */
+html {
+    scroll-behavior: smooth; /* Плавная прокрутка при клике на кнопки */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0b111a;
+    color: white;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Растягиваем тело на всю высоту экрана */
+}
+
+main {
+    flex: 1; /* Этот параметр "выталкивает" футер вниз, если контента мало */
+}
+
+/* Навигация */
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #00d4ff;
+}
+
+.logo span {
+    color: #ff8c00;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+nav ul li a:hover {
+    color: #00d4ff;
+}
+
+.btn-play {
+    background: #ff8c00;
+    color: black !important; /* Чтобы текст всегда был черным */
+    padding: 10px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-play:hover {
+    background: #e67e00;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 140, 0, 0.4);
+}
+
+/* Шапка */
+header {
+    height: 100vh; /* Сделал шапку на весь экран для красоты */
+    background: linear-gradient(rgba(11, 17, 26, 0.6), rgba(11, 17, 26, 0.9)), 
+                url('https://images.unsplash.com/photo-1627398242454-45a1465c2479?auto=format&fit=crop&q=80&w=1920') no-repeat center center/cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 4.5rem;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+.hero h1 span {
+    color: #ff8c00;
+}
+
+.server-ip {
+    background: rgba(26, 38, 53, 0.8);
+    padding: 20px 40px;
+    border: 2px solid #00d4ff;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: 0.4s;
+    margin-top: 20px;
+}
+
+.server-ip:hover {
+    border-color: #ff8c00;
+    background: #1a2635;
+    transform: scale(1.05);
+}
+
+.server-ip i {
+    margin-left: 10px;
+    color: #ff8c00;
+}
+
+/* Секции */
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 100px 20px;
+    flex-wrap: wrap;
+    background: #0b111a;
+}
+
+.feature-card {
+    background: #162130;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    width: 320px;
+    border-top: 4px solid #ff8c00; /* Оранжевая полоска сверху */
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    border-top-color: #00d4ff; /* Меняется на голубой при наведении */
+}
+
+.feature-card i {
+    font-size: 3rem;
+    color: #00d4ff;
+    margin-bottom: 20px;
+}
+
+/* Футер - теперь он всегда будет внизу */
+footer {
+    text-align: center;
+    padding: 30px;
+    background: #05080c;
+    color: #555;
+    border-top: 1px solid #1a2635;
+}

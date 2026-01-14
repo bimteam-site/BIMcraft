@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIMcraft — Сервер Майнкрафт</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+        body { background-color: #0b111a; color: white; min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* Шапка сайта */
+        .top-nav {
+            background: #000;
+            height: 70px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 3px solid #00d4ff;
+        }
+
+        .logo { font-size: 26px; font-weight: bold; color: #00d4ff; }
+        .logo span { color: #ff8c00; }
+
+        .top-nav ul { display: flex; list-style: none; }
+        .top-nav ul li a { color: white; text-decoration: none; margin: 0 15px; transition: 0.3s; }
+        .top-nav ul li a:hover { color: #ff8c00; }
+
+        .btn-play { background: #ff8c00; color: #000 !important; padding: 8px 18px; border-radius: 4px; text-decoration: none; font-weight: bold; }
+
+        header {
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://i.postimg.cc/QtprJJbK/3ceed5dec6a11f09aabcae094644fc9-3.jpg') center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .hero h1 { font-size: 4rem; }
+        .hero h1 span { color: #ff8c00; }
+
+        .server-ip { margin-top: 20px; padding: 15px; border: 2px dashed #00d4ff; cursor: pointer; background: rgba(0,212,255,0.1); border-radius: 10px; }
+
+        /* Техническая секция */
+        .tech-section { padding: 40px 20px; background: #0b111a; }
+        .tech-card { border-left: 5px solid #ff8c00 !important; margin-bottom: 20px; }
+        .info-block { border-left: 5px solid #00d4ff !important; background: rgba(0, 212, 255, 0.05); }
+
+        /* Магазин */
+        .shop-section { padding: 60px 20px; text-align: center; }
+        .section-title { font-size: 2.5rem; margin-bottom: 40px; color: #00d4ff; }
+        .shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; }
+        .shop-item { background: #162130; padding: 25px; border-radius: 10px; border-top: 4px solid #ff8c00; transition: 0.3s; }
+        .shop-item:hover { transform: translateY(-5px); }
+        .shop-item i { font-size: 2.5rem; color: #00d4ff; margin-bottom: 15px; display: block; }
+        .price { font-size: 1.5rem; color: #ff8c00; font-weight: bold; margin-bottom: 15px; }
+        .buy-btn { width: 100%; padding: 10px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; background: #fff; transition: 0.3s; }
+        .buy-btn:hover { background: #00d4ff; color: #fff; }
+        .shop-item.danger { border-top-color: #ff4444; }
+
+        /* ПРАВКИ ДЛЯ ОКНА ОПЛАТЫ */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
+        .modal-content { background: #162130; margin: 15% auto; padding: 30px; border: 2px solid #00d4ff; width: 90%; max-width: 450px; border-radius: 15px; text-align: center; }
+        .pay-info-box { background: #000; padding: 15px; border-radius: 10px; margin: 15px 0; border: 1px solid #333; }
+        .pay-info-box span { color: #ff8c00; font-weight: bold; font-size: 1.2rem; }
+
+        /* Правила */
+        .rules-section { padding: 60px 20px; background: #0f1722; }.rules-container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+        .rules-category { background: #162130; padding: 20px; border-left: 5px solid #00d4ff; border-radius: 0 10px 10px 0; text-align: left; }
+        .rules-category h3 { color: #ff8c00; margin-bottom: 10px; }
+        .rules-category ul { list-style: none; }
+        .rules-category li { margin-bottom: 8px; color: #ccc; }
+        .rules-category span { color: #00d4ff; font-weight: bold; margin-right: 5px; }
+        .special { border-left-color: #ff8c00; }
+        .warning { color: #ff8c00 !important; }
+
+        /* Форум */
+        .forum-section { padding: 80px 20px; text-align: center; border-top: 2px solid #00d4ff; }
+        .forum-btn { display: inline-block; padding: 15px 30px; border: 2px solid #ff8c00; color: #ff8c00; text-decoration: none; font-weight: bold; border-radius: 50px; transition: 0.3s; margin-top: 20px; }
+        .forum-btn:hover { background: #ff8c00; color: #000; }
+
+        footer { padding: 30px; text-align: center; color: #555; background: #000; margin-top: auto; }
+    </style>
+</head>
+<body>
+
+<div id="payModal" class="modal">
+    <div class="modal-content">
+        <h2 style="color:#00d4ff">Оплата предмета</h2>
+        <div class="pay-info-box">
+            <p>Перевод по СБП (Альфа-Банк)</p>
+            <p>Номер: <span>+7 952 227 92 06</span></p>
+        </div>
+        <p style="font-size:0.9rem; color:#888">Сделайте скриншот чека и отправьте на форум.</p>
+        <button class="buy-btn" style="margin-top:15px; background:#ff8c00" onclick="document.getElementById('payModal').style.display='none'">Закрыть</button>
+    </div>
+</div>
+
+<nav class="top-nav">
+    <div class="logo">BIM<span>craft</span></div>
+    <ul>
+        <li><a href="#">Главная</a></li>
+        <li><a href="#shop">Магазин</a></li>
+        <li><a href="#rules">Правила</a></li>
+        <li><a href="https://max.ru/join/2nmlB1USi3HdKuoVsyX2jFAXw5yxnHZ8Z2eRWwEoN_s" target="_blank">Форум</a></li>
+    </ul>
+    <a href="#play" class="btn-play">Начать играть</a>
+</nav>
+
+<header id="play">
+    <div class="hero">
+        <h1>BIM<span>craft</span></h1>
+        <p>Лучшее выживание в minecraft.</p>
+        <div class="server-ip" onclick="copyIP()">
+            IP: <span id="ip-address">month-shirt.gl.joinmc.link</span>
+            <i class="fas fa-copy"></i>
+        </div>
+    </div>
+</header>
+
+<main>
+    <section class="features">
+        <div style="display: flex; justify-content: center; gap: 20px; padding: 40px; flex-wrap: wrap;">
+            <div style="background: #162130; padding: 20px; border-radius: 10px; text-align: center; width: 250px;">
+                <i class="fas fa-rocket" style="font-size: 2rem; color: #ff8c00; margin-bottom: 10px;"></i>
+                <h3>Мощный хостинг</h3>
+                <p>Никаких лагов — только стабильный и плавный геймплей.</p>
+            </div>
+            <div style="background: #162130; padding: 20px; border-radius: 10px; text-align: center; width: 250px;">
+                <i class="fas fa-shield-halved" style="font-size: 2rem; color: #ff8c00; margin-bottom: 10px;"></i>
+                <h3>Честная игра</h3>
+                <p>Продвинутая защита от читеров и отзывчивая администрация.</p>
+            </div>
+            <div style="background: #162130; padding: 20px; border-radius: 10px; text-align: center; width: 250px;">
+                <i class="fas fa-users" style="font-size: 2rem; color: #ff8c00; margin-bottom: 10px;"></i>
+                <h3>Дружное комьюнити</h3>
+                <p>Найди новых друзей и создай свой неповторимый клан.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="tech-section">
+        <div class="rules-container">
+            <div class="rules-category tech-card">
+                <h3><i class="fas fa-microchip"></i> Технические моменты сервера</h3>
+                <ul>
+                    <li><span>Процессор:</span> AMD Ryzen 7 5800H (3.20 GHz)</li><li><span>Оперативная память:</span> 16 ГБ DDR4</li>
+                    <li><span>Накопитель:</span> SSD Samsung</li>
+                    <li><span>Ядро:</span> Paper (Оптимизировано)</li>
+                    <li><span>Локация:</span> Россия, Сосновый Бор</li>
+                </ul>
+            </div>
+            
+            <div class="rules-category info-block">
+                <h3><i class="fas fa-wifi"></i> Что нужно для игры</h3>
+                <ul>
+                    <li><span>Версия:</span> 1.21.11</li>
+                    <li><span>Лицензия:</span> Обязательна</li>
+                    <li><span>Интернет:</span> стабильный Wi-Fi (2.4G, 5.0G)</li>
+                    <li><span>Тип версии:</span> JAVA (P.S. на мобильных через PojavLauncher)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="shop" class="shop-section">
+        <h2 class="section-title">Магазин предметов</h2>
+        <div class="shop-grid">
+            <div class="shop-item">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Full сет незеритовой брони</h3>
+                <p class="price">310 руб.</p>
+                <button class="buy-btn" onclick="document.getElementById('payModal').style.display='block'">Купить</button>
+            </div>
+            <div class="shop-item">
+                <i class="fas fa-hammer"></i>
+                <h3>Неломаемые инструменты</h3>
+                <p class="price">237 руб.</p>
+                <button class="buy-btn" onclick="document.getElementById('payModal').style.display='block'">Купить</button>
+            </div>
+            <div class="shop-item">
+                <i class="fas fa-magic"></i>
+                <h3>Меч хранителя + Кирка</h3>
+                <p class="price">150 руб.</p>
+                <button class="buy-btn" onclick="document.getElementById('payModal').style.display='block'">Купить</button>
+            </div>
+            <div class="shop-item danger">
+                <i class="fas fa-skull"></i>
+                <h3>Смертельный меч</h3>
+                <p class="price">100 руб.</p>
+                <button class="buy-btn" onclick="document.getElementById('payModal').style.display='block'">Купить</button>
+            </div>
+            <div class="shop-item">
+                <i class="fas fa-gem"></i>
+                <h3>Спец. алмазный меч</h3>
+                <p class="price">90 руб.</p>
+                <button class="buy-btn" onclick="document.getElementById('payModal').style.display='block'">Купить</button>
+            </div>
+            <div class="shop-item">
+                <i class="fas fa-fire"></i>
+                <h3>Спец. незеритовый меч</h3>
+                <p class="price">125 руб.</p>
+                <button class="buy-btn" onclick="document.getElementById('payModal').style.display='block'">Купить</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="rules" class="rules-section">
+        <h2 class="section-title">Правила сервера</h2>
+        <div class="rules-container">
+            <div class="rules-category">
+                <h3><i class="fas fa-gavel"></i> Общие правила</h3>
+                <ul>
+                    <li><span>1.1.</span> Незнание правил не освобождает от ответственности.</li>
+                    <li><span>1.2.</span> Запрещено использование читов мешающие игровому процессу (cheststealer, Fly, Aura и др.).</li>
+                    <li><span>1.3.</span> Запрещена дестабилизация работы сервера.</li>
+                </ul>
+            </div>
+            <div class="rules-category special">
+                <h3><i class="fas fa-server"></i> Технические правила</h3>
+                <ul>
+                    <li class="warning"><span>2.1.</span> <strong>КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО</strong> строить лаг-машины.</li>
+                    <li><span>2.2.</span> Запрещены механизмы, вызывающие падение TPS.</li>
+                    <li><span>2.3.</span> Ограничение на мобов: не более 50 на чанк.</li></ul>
+            </div>
+            <div class="rules-category">
+                <h3><i class="fas fa-comments"></i> Игровой чат</h3>
+                <ul>
+                    <li><span>3.1.</span> Запрещен спам, флуд и капс в глобальном чате.</li>
+                    <li><span>3.2.</span> Запрещено оскорбление администрации и игроков.</li>
+                    <li><span>3.3.</span> Реклама сторонних ресурсов (серверов, сайтов) карается баном.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="forum" class="forum-section">
+        <div class="forum-content">
+            <h2>Наш <span>Форум</span></h2>
+            <p>Узнавай новости первым и общайся с игроками!</p>
+            <a href="https://max.ru/join/2nmlB1USi3HdKuoVsyX2jFAXw5yxnHZ8Z2eRWwEoN_s" target="_blank" class="forum-btn">Открыть форум</a>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2026 BIMcraft. Все права защищены. версия 1.3</p>
+</footer>
+
+<script>
+    function copyIP() {
+        const ip = document.getElementById('ip-address').innerText;
+        navigator.clipboard.writeText(ip);
+        alert('IP скопирован: ' + ip);
+    }
+</script>
+
+</body>
+</html>
